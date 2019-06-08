@@ -8,10 +8,81 @@ const findBlackjackWinner = playerObj => {
   const playerBScore = playerBCardArr
     .map(card => getCardScore(card))
     .reduce((acc, current) => acc + current);
-  console.log(playerAScore, playerBScore);
-  return compareScores(playerAScore, playerBScore);
+
+  const result = compareScores(playerAScore, playerBScore);
+
+  if (result === 1) {
+    return "Player A Wins";
+  } else if (result === 2) {
+    return "Player B Wins";
+  } else {
+    handleDraw(playerACardArr, playerBCardArr);
+  }
 };
 
+const handleDraw = (cardArrOne, cardArrTwo) => {
+  const sortedValueArrOne = cardArrOne.sort((a, b) => {
+    const valOne = a.substring(0, a.length - 1);
+    const valTwo = a.substring(0, a.length - 1);
+    //if the card is a face card
+    if (Number.isNaN(Number(valOne)) && Number.isNaN(Number(valTwo))) {
+      if (compareFaceCards(a, b, "A") === 0) {
+        if (compareFaceCards(a, b, "K") === 0) {
+          if (compareFaceCards(a, b, "Q") === 0) {
+            return compareFaceCards(a, b, "J");
+          } else {
+            return compareFaceCards(a, b, "Q");
+          }
+        } else {
+          return compareFaceCards(a, b, "K");
+        }
+      } else {
+        return compareFaceCards(a, b, "A");
+      }
+    } else if (Number.isNaN(Number(valOne) && !Number.isNaN(Number(valTwo)))) {
+      return -1;
+    } else if (!Number.isNaN(Number(valOne) && Number.isNaN(Number(valTwo)))) {
+      return 1;
+    } else {
+      Number(valOne) > Number(valTwo) ? -1 : 1;
+    }
+  });
+
+  console.log(sortedValueArrOne);
+
+  function compareFaceCards(cardOne, cardTwo, value) {
+    const valOne = cardOne.substring(0, cardOne.length - 1);
+    const valTwo = cardTwo.substring(0, cardOne.length - 1);
+    console.log(valOne);
+    if (valOne === value && valTwo === value) {
+      return compareBySuits(a, b) === "a" ? -1 : 1;
+    } else if (valTwo === value || valOne === value) {
+      return valOne === value ? -1 : 1;
+    } else {
+      return compareBySuits(cardOne, cardTwo);
+    }
+  }
+
+  //   const sortedValueArrTwo = cardArrOne.map(card.substring(0, card.length - 1));
+  const helperFunction = (valueArrOne, valueArrTwo) => {};
+};
+
+const compareBySuits = (cardOne, cardTwo) => {
+  //Compare by suits
+};
+
+//Draw scenario:
+// 5S 6S
+// 5, 6
+// 5, 3, 3
+// QD JD
+// K Q J 10
+// 11
+// 5D 3C 3S
+
+//take items in array --> sort by value
+//compare --> take into account first number/score
+// if number is the same --> go by suit
 //Takes card of type "10D" and returns its score
 const getCardScore = card => {
   let num;
@@ -44,9 +115,9 @@ const compareScores = (scoreOne, scoreTwo) => {
 };
 
 let a = findBlackjackWinner({
-  playerA: ["10S", "JC"],
+  playerA: ["10S", "KS", "JC", "AH"],
   playerAWins: false,
-  playerB: ["JH", "QS"]
+  playerB: ["10S", "JC", "AS", "QH"]
 });
 
 console.log(a);
