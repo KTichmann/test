@@ -87,7 +87,7 @@ function compareFaceCards(cardOne, cardTwo, value) {
   if (valOne === value && valTwo === value) {
     return compareBySuits(cardOne, cardTwo);
   } else if (valTwo === value || valOne === value) {
-    return valOne === value ? -1 : 1;
+    return valOne === value ? 1 : -1;
   } else {
     return 0;
   }
