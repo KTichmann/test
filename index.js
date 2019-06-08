@@ -18,7 +18,7 @@ const findBlackjackWinner = playerObj => {
   } else if (result === 2) {
     return "Player B Wins";
   } else {
-    return handleDraw(playerACardArr, playerBCardArr) === 1
+    return handleDraw(playerACardArr, playerBCardArr) > -1
       ? "Player A Wins"
       : "Player B Wins";
   }
@@ -29,7 +29,7 @@ const handleDraw = (cardArrOne, cardArrTwo) => {
   const sortedValueArrTwo = cardArrTwo.sort(sortTwoCards);
   function findWinner(arrOne, arrTwo) {
     if (arrOne.length === 0 || arrTwo.length === 0) {
-      return 0;
+      return arrOne.length === 0 ? -1 : 1;
     }
     const result = sortTwoCards(arrOne[0], arrTwo[0]);
     if (result === 0) {
@@ -77,7 +77,7 @@ function sortTwoCards(a, b) {
   } else if (Number(valOne) === Number(valTwo)) {
     return compareBySuits(a, b);
   } else {
-    return Number(valOne) > Number(valTwo) ? -1 : 1;
+    return Number(valOne) > Number(valTwo) ? 1 : -1;
   }
 }
 
