@@ -18,9 +18,9 @@ const findBlackjackWinner = playerObj => {
   } else if (result === 2) {
     return "Player B Wins";
   } else {
-    return handleDraw(playerACardArr, playerBCardArr) > -1
-      ? "Player B Wins"
-      : "Player A Wins";
+    return handleDraw(playerACardArr, playerBCardArr) === 1
+      ? "Player A Wins"
+      : "Player B Wins";
   }
 };
 
@@ -33,12 +33,12 @@ const handleDraw = (cardArrOne, cardArrTwo) => {
     }
     const result = sortTwoCards(arrOne[0], arrTwo[0]);
     if (result === 0) {
-      return findWinner(arrOne.shift(), arrTwo.shift());
+      findWinner(arrOne.shift(), arrTwo.shift());
     } else {
       return result;
     }
   }
-  return findWinner(sortedValueArrOne, sortedValueArrTwo) > -1;
+  return findWinner(sortedValueArrOne, sortedValueArrTwo);
 };
 
 function sortTwoCards(a, b) {
@@ -94,11 +94,8 @@ function compareFaceCards(cardOne, cardTwo, value) {
 }
 
 const compareBySuits = (cardOne, cardTwo) => {
-  console.log("comparing by suits");
   const suitOne = cardOne[cardOne.length - 1];
-  console.log("suitOne ", suitOne);
   const suitTwo = cardTwo[cardTwo.length - 1];
-  console.log("suitTwo ", suitTwo);
   const suitValArr = ["S", "H", "C", "D"];
   const suitOneVal = suitValArr.indexOf(suitOne);
   const suitTwoVal = suitValArr.indexOf(suitTwo);
@@ -109,9 +106,6 @@ const compareBySuits = (cardOne, cardTwo) => {
   }
 };
 
-//take items in array --> sort by value
-//compare --> take into account first number/score
-// if number is the same --> go by suit
 //Takes card of type "10D" and returns its score
 const getCardScore = card => {
   let num;
@@ -142,14 +136,6 @@ const compareScores = (scoreOne, scoreTwo) => {
     return 0;
   }
 };
-
-// console.log(
-//   findBlackjackWinner({
-//     playerA: ["8S", "10C"],
-//     playerAWins: true,
-//     playerB: ["10D", "8H"]
-//   })
-// );
 
 testArr.map(obj => {
   const result = findBlackjackWinner(obj);
