@@ -4,5 +4,8 @@
   "description": "YocoJack implementation",
   "main": "index.js",
   "author": "ktichmann <ktichmann@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  }
 }
